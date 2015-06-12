@@ -1,7 +1,5 @@
 <?php
-
 namespace AdvancedKits;
-
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\event\Listener;
@@ -10,31 +8,25 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\utils\Config;
-
 class Main extends PluginBase implements Listener{
-
 	public $hasKit = [];
-
 	/** @var Config*/
 	private $kits;
-
 	/** @var Config*/
 	public $vipPlayers;
-
 	/** @var Config*/
 	public $vipPlayersPlus;
-
 	public function onEnable(){
   		@mkdir($this->getDataFolder());
   		$this->kits = new Config($this->getDataFolder()."kits.yml", Config::YAML, [
-			"VIP" => ["Rank" => "Vip", "Armor" => [310, 307, 308, 313], "Content" => [
+			"VIP+" => ["Rank" => "Vip+", "Armor" => [310, 311, 312, 313], "Content" => [
 					[349, 0, 64],
 					[276, 0, 1],
 					[278, 0, `]
 				]
 			],
-			"VIP+" => ["Rank" => "Vip+", "Armor" => [310, 311, 312, 313], "Content" => [
-                   	[276, 0, 1],
+			"VIP" => ["Rank" => "Vip", "Armor" => [310, 307, 308, 313], "Content" => [
+			[276, 0, 1],
                    	[278, 0, 1],
                    	[364, 0, 32]
                 ]
@@ -51,16 +43,14 @@ class Main extends PluginBase implements Listener{
   		$this->vipPlayersPlus = new Config($this->getDataFolder()."vips+.txt", Config::ENUM);
   		$this->getServer()->getPluginManager()->registerEvents($this, $this);
  	}
-
  	public function onDisable(){
  	 	$this->kits->save();
  	 	$this->vipPlayers->save();
  	 	$this->vipPlayersPlus->save();
  	}
-
  	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
   		switch($command->getName()){
-  			case "k":
+  			case "advancedkits":
 				if(!(isset($args[0]))){
 					return false;
 				}
@@ -73,7 +63,7 @@ class Main extends PluginBase implements Listener{
 						return true;
 					}
 					if(in_array($sender->getName(), $this->hasKit)){
-						$sender->sendMessage("[CF] You already have a kit.");
+						$sender->sendMessage("[CF] You already got a kit.");
 						return true;
 					}
 					if($this->kits->exists($args[1])){
@@ -145,5 +135,4 @@ class Main extends PluginBase implements Listener{
 			unset($this->hasKit[$key]);
 		}
 	}
-
 }
