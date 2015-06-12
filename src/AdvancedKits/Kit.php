@@ -22,7 +22,7 @@ class Kit{
 
     public function give(Player $player){
         if(!$this->testRank($player)){
-            $player->sendMessage("[AdvancedKits] You don't have permission to use this kit.");
+            $player->sendMessage("[CF] You don't have permission to use this kit.");
         }
         $armorItems = [];
         foreach($this->armor as $armor){
